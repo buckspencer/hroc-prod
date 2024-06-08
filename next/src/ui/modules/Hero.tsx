@@ -27,7 +27,8 @@ export default function Hero({
 	return (
 		<section
 			className={cn(
-				hasImage && 'grid bg-ink text-canvas *:col-span-full *:row-span-full',
+				hasImage &&
+					'top-0 grid bg-ink text-canvas *:col-span-full *:row-span-full',
 			)}
 		>
 			{bgImage && (
@@ -49,7 +50,7 @@ export default function Hero({
 							'richtext relative max-w-xl [&_:is(h1,h2)]:text-balance',
 							bgImage?.asset && 'text-shadow',
 							{
-								'mb-8': stegaClean(alignItems) === 'start',
+								'mb-8 mt-10': stegaClean(alignItems) === 'start',
 								'my-auto': stegaClean(alignItems) === 'center',
 								'mt-auto': stegaClean(alignItems) === 'end',
 							},
@@ -61,10 +62,14 @@ export default function Hero({
 						)}
 						style={{ textAlign: stegaClean(textAlign) }}
 					>
-						<Pretitle className={cn(hasImage && 'text-canvas/70')}>
+						<Pretitle
+							className={cn(hasImage && 'animate-slide-in-left text-canvas')}
+						>
 							{pretitle}
 						</Pretitle>
-						<PortableText value={content} />
+						<div className="animate-slide-in-left text-canvas">
+							<PortableText value={content} />
+						</div>
 						<CTAList
 							ctas={ctas}
 							className={cn('!mt-4', {

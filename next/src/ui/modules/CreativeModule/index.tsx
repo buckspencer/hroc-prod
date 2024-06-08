@@ -39,7 +39,7 @@ export default function CreativeModule({
 		<section>
 			<div className="section space-y-8">
 				{intro && (
-					<header className="richtext mx-auto max-w-xl text-balance text-center">
+					<header className="richtext mx-auto max-w-4xl text-balance break-words text-center">
 						<PortableText value={intro} />
 					</header>
 				)}

@@ -48,7 +48,7 @@
 	}
 
 	.h2 {
-		@apply _h text-2xl;
+		@apply _h text-6xl;
 	}
 
 	.h3 {

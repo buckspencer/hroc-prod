@@ -9,9 +9,20 @@ const config: Config = {
 				ink: '#000',
 				canvas: '#fff',
 			},
-			fontFamily: {},
+			fontFamily: {
+				sans: ['Lora', 'serif'],
+			},
 			maxHeight: {
 				fold: 'calc(100svh - var(--header-height))',
+			},
+			keyframes: {
+				'slide-in-left': {
+					'0%': { transform: 'translateX(-100%)', opacity: '0' },
+					'100%': { transform: 'translateX(0)', opacity: '1' },
+				},
+			},
+			animation: {
+				'slide-in-left': 'slide-in-left 1.5s ease-out forwards',
 			},
 		},
 	},

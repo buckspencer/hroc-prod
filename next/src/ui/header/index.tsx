@@ -6,21 +6,22 @@ import CTAList from '@/ui/CTAList'
 import Toggle from './Toggle'
 import { cn } from '@/lib/utils'
 import css from './Header.module.css'
+import Img from '../Img'
 
 export default async function Header() {
-	const { title, ctas } = await getSite()
+	const { title, ctas, logo } = await getSite()
 
 	return (
-		<Wrapper className="frosted-glass sticky top-0 z-10 border-b border-ink/10 bg-canvas max-md:header-open:shadow-lg">
+		<Wrapper className="sticky top-0 z-10 bg-slate-500/90 py-2 max-md:header-open:shadow-lg">
 			<div
 				className={cn(
 					css.header,
-					'mx-auto grid max-w-screen-xl items-center gap-x-6 p-4',
+					'mx-auto grid max-w-screen-xl items-center gap-x-6',
 				)}
 			>
-				<div className="[grid-area:logo]">
+				<div className="pl-5 [grid-area:logo]">
 					<Link className="h4 md:h3" href="/">
-						{title}
+						<Img image={logo.image['dark']} imageWidth={200}></Img>
 					</Link>
 				</div>
 
@@ -28,7 +29,7 @@ export default async function Header() {
 
 				<CTAList
 					ctas={ctas}
-					className="[grid-area:ctas] max-md:*:w-full max-md:header-closed:hidden md:ml-auto"
+					className="text-xl [grid-area:ctas] max-md:*:w-full max-md:header-closed:hidden md:ml-auto"
 				/>
 
 				<Toggle />
