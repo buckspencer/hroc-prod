@@ -1,10 +1,10 @@
-export default function CustomHTML({
-	html,
-}: Partial<{
-	html: {
-		code: string
+import parse from 'html-react-parser'
+export default function CustomHTML({ html }) {
+	const options = {
+		htmlparser2: {
+			lowerCaseTags: false,
+		},
 	}
-}>) {
 	if (!html?.code) return null
-	return <div dangerouslySetInnerHTML={{ __html: html.code }} />
+	return <div>{parse(html.code, options)}</div>
 }

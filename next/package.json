@@ -18,6 +18,7 @@
 		"clsx": "^2.1.1",
 		"feed": "^4.2.2",
 		"groq": "^3.45.0",
+		"html-react-parser": "^5.1.10",
 		"next": "^14.2.3",
 		"next-sanity": "^9.3.10",
 		"next-sanity-image": "^6.1.1",
