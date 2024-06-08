@@ -1,4 +1,6 @@
 import { defineConfig } from 'sanity'
+import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
+
 import { BASE_URL, projectId } from './src/env'
 import { structureTool } from 'sanity/structure'
 import defaultDocumentNode from './src/defaultDocumentNode'
@@ -24,6 +26,7 @@ export default defineConfig({
 	dataset: 'production',
 
 	plugins: [
+		unsplashImageAsset(),
 		structureTool({
 			title: 'Content',
 			defaultDocumentNode,
