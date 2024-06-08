@@ -23,7 +23,7 @@ export default async function RootLayout({
 		<html lang="en">
 			{/* <GoogleTagManager gtmId='' /> */}
 
-			<body className="bg-canvas text-ink">
+			<body className="pattern-clouds-red-200/10 text-ink">
 				<SkipToContent />
 				<Announcement />
 				<Header />
