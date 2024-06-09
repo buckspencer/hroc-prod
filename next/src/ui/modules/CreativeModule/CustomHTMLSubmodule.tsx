@@ -12,5 +12,9 @@ export default function CustomHTMLSubmodule({
 }: {
 	module: CustomHTMLSubmoduleType
 }) {
-	return <CustomHTML html={module?.html} />
+	// Check if module?.html is defined and module?.html?.code is a string
+	const htmlCode =
+		typeof module?.html?.code === 'string' ? module.html.code : ''
+
+	return <CustomHTML html={htmlCode} />
 }
