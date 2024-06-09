@@ -16,11 +16,15 @@
 	:target {
 		scroll-margin-top: var(--header-height);
 	}
-
 	html {
 		accent-color: theme('colors.ink');
 		caret-color: theme('colors.ink');
 		scroll-behavior: smooth;
+		font-family: 'Lora', serif !important;
+	}
+
+	body {
+		font-family: sans-serif;
 	}
 
 	label {

@@ -10,7 +10,7 @@ const config: Config = {
 				canvas: '#fff',
 			},
 			fontFamily: {
-				sans: ['Lora', 'serif'],
+				lora: ['Lora', 'serif'],
 			},
 			maxHeight: {
 				fold: 'calc(100svh - var(--header-height))',
