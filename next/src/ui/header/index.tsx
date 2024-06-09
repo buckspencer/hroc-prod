@@ -25,12 +25,12 @@ export default async function Header() {
 					</Link>
 				</div>
 
-				<Navigation />
-
 				<CTAList
 					ctas={ctas}
 					className="text-xl [grid-area:ctas] max-md:*:w-full max-md:header-closed:hidden md:ml-auto"
 				/>
+
+				<Navigation />
 
 				<Toggle />
 			</div>
