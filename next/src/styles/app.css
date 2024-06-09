@@ -48,11 +48,11 @@
 	}
 
 	.h1 {
-		@apply _h text-3xl;
+		@apply _h text-6xl;
 	}
 
 	.h2 {
-		@apply _h text-6xl;
+		@apply _h text-5xl;
 	}
 
 	.h3 {

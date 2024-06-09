@@ -8,8 +8,8 @@ export default function Pretitle({
 	if (!children) return null
 
 	return (
-		<p className={cn('technical text-3xl text-slate-50', className)}>
+		<h1 className={cn('technical text-5xl text-slate-50', className)}>
 			{stegaClean(children)}
-		</p>
+		</h1>
 	)
 }
