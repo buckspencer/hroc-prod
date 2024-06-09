@@ -93,6 +93,9 @@
 		justify-content: center;
 		padding: 0.5em 1em;
 		text-align: center;
+		&:hover {
+			opacity: 0.5; /* Set opacity to 50% */
+		}
 	}
 
 	.action {
@@ -104,10 +107,8 @@
 	}
 
 	.link {
-		text-decoration: underline;
-
 		&:hover {
-			text-decoration-thickness: 2px;
+			opacity: 0.5; /* Set opacity to 50% */
 		}
 	}
 
