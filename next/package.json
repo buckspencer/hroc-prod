@@ -31,6 +31,7 @@
 		"shiki": "^1.6.3",
 		"tailwind-merge": "^2.3.0",
 		"tailwindcss-patterns": "^0.1.2",
+		"twind": "^0.16.19",
 		"zustand": "^4.5.2"
 	},
 	"devDependencies": {

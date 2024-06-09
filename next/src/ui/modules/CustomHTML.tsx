@@ -1,12 +1,23 @@
-import parse from 'html-react-parser' // Importing parse function from html-react-parser
+'use client'
+import { setup, tw } from 'twind'
+import { css } from 'twind/css'
+import { useEffect } from 'react'
+
+// Ensure Twind is set up
+setup({
+	/* your twind config here, if needed */
+})
 
 export default function CustomHTML({ html }: { html: string }) {
-	// Explicitly typing the 'html' prop
-	const options = {
-		htmlparser2: {
-			lowerCaseTags: false,
-		},
-	}
+	useEffect(() => {
+		// Process the styles when the component mounts
+		document.querySelectorAll('[data-tw]').forEach((element) => {
+			const classes = element.getAttribute('data-tw')
+			if (classes) {
+				element.className = tw(classes)
+			}
+		})
+	}, [html])
 
-	return <div>{parse(html, options)}</div> // Parse the HTML string using parse function
+	return <div dangerouslySetInnerHTML={{ __html: html }} />
 }
