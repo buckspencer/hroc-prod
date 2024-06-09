@@ -63,7 +63,9 @@ export default function Hero({
 						style={{ textAlign: stegaClean(textAlign) }}
 					>
 						<Pretitle
-							className={cn(hasImage && 'animate-slide-in-left text-canvas')}
+							className={cn(
+								hasImage && 'animate-slide-in-left text-5xl text-canvas',
+							)}
 						>
 							{pretitle}
 						</Pretitle>
