@@ -37,3 +37,14 @@ next-env.d.ts
 
 public/google*.html
 .env
+
+
+# Yarn
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+.yarnrc
+.yarnrc.yml

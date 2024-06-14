@@ -20,7 +20,7 @@
 		accent-color: theme('colors.ink');
 		caret-color: theme('colors.ink');
 		scroll-behavior: smooth;
-		font-family: 'Lora', serif !important;
+		font-family: 'Lora', serif;
 	}
 
 	body {
