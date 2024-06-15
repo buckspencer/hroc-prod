@@ -1,6 +1,7 @@
 import AccordionList from './AccordionList'
 import BlogRollup from './blog/Rollup'
 import Callout from './Callout'
+import ContactForm from './ContactForm'
 import CreativeModule from './CreativeModule'
 import CustomHTML from './CustomHTML'
 import FlagList from './FlagList'
@@ -25,6 +26,8 @@ export default function Modules({ modules }: { modules?: Sanity.Module[] }) {
 						return <BlogRollup {...module} key={module._key} />
 					case 'callout':
 						return <Callout {...module} key={module._key} />
+					case 'contact-form':
+						return <ContactForm {...module} key={module._key} />
 					case 'creative-module':
 						return <CreativeModule {...module} key={module._key} />
 					case 'custom-html':

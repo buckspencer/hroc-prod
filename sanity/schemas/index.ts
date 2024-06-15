@@ -19,6 +19,7 @@ import metadata from './objects/metadata'
 import accordionList from './modules/accordion-list'
 import blogRollup from './modules/blog-rollup'
 import callout from './modules/callout'
+import contactForm from './modules/contact-form'
 import creativeModule from './modules/creative'
 import customHtml from './modules/custom-html'
 import dailyPassage from './modules/daily-passage'
@@ -54,6 +55,7 @@ export const schemaTypes = [
 	accordionList,
 	blogRollup,
 	callout,
+	contactForm,
 	creativeModule,
 	customHtml,
 	dailyPassage,

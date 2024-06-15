@@ -16,6 +16,7 @@ export default defineType({
 				{ type: 'accordion-list' },
 				{ type: 'blog-rollup' },
 				{ type: 'callout' },
+				{ type: 'contact-form' },
 				{ type: 'creative-module' },
 				{ type: 'custom-html' },
 				{ type: 'daily-passage' },

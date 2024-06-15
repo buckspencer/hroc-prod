@@ -428,6 +428,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/nodemailer@npm:^6":
+  version: 6.4.15
+  resolution: "@types/nodemailer@npm:6.4.15"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/553e613fe08fd663bff1fb3647a8ebbcc4ca297a6249296a43f3c92499158acad5955689be2096ff3fe72f145e80d749c1fc66d5549fe665d7ceb6d0946f2a26
+  languageName: node
+  linkType: hard
+
 "@types/prop-types@npm:*":
   version: 15.7.12
   resolution: "@types/prop-types@npm:15.7.12"
@@ -1846,6 +1855,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nodemailer@npm:^6.9.13":
+  version: 6.9.13
+  resolution: "nodemailer@npm:6.9.13"
+  checksum: 10c0/4d6899f45abb7760a7d3b4d1046de7e08e80a471b84d1f09065a25941ded482e7f9877be248550e681e0270383cb9299f6caded507cbc0e917341bb137cc94a4
+  languageName: node
+  linkType: hard
+
 "nopt@npm:^7.0.0":
   version: 7.2.1
   resolution: "nopt@npm:7.2.1"
@@ -2174,6 +2190,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.51.5":
+  version: 7.51.5
+  resolution: "react-hook-form@npm:7.51.5"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: 10c0/5b13f99a125d92ee618f2d4e218d5ec854f8cac1b568e83b4b125efb002cc79eef0f5c06b54015c78e16a830cf1ea356a646e8c6abb00b7ca8225dba9a92091e
+  languageName: node
+  linkType: hard
+
 "react-icons@npm:^5.2.1":
   version: 5.2.1
   resolution: "react-icons@npm:5.2.1"
@@ -2341,6 +2366,7 @@ __metadata:
     "@twind/preset-tailwind": "npm:^1.1.4"
     "@types/he": "npm:^1"
     "@types/node": "npm:^20.14.2"
+    "@types/nodemailer": "npm:^6"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     "@types/rss": "npm:^0.0.32"
@@ -2356,12 +2382,14 @@ __metadata:
     next-sanity: "npm:^9.3.10"
     next-sanity-image: "npm:^6.1.1"
     node-fetch: "npm:^3.3.2"
+    nodemailer: "npm:^6.9.13"
     postcss: "npm:^8.4.38"
     prettier: "npm:^3.3.1"
     prettier-plugin-tailwindcss: "npm:^0.6.2"
     react: "npm:^18"
     react-device-detect: "npm:^2.2.3"
     react-dom: "npm:^18"
+    react-hook-form: "npm:^7.51.5"
     react-icons: "npm:^5.2.1"
     rss: "npm:^1.2.2"
     shiki: "npm:^1.6.3"
