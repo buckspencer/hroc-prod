@@ -12,7 +12,7 @@ export default async function Header() {
 	const { title, ctas, logo } = await getSite()
 
 	return (
-		<Wrapper className="sticky top-0 z-10 bg-slate-500/90 py-2 max-md:header-open:shadow-lg">
+		<Wrapper className="sticky top-0 z-10 bg-yellow-600 py-2 max-md:header-open:shadow-lg">
 			<div
 				className={cn(
 					css.header,
@@ -21,7 +21,7 @@ export default async function Header() {
 			>
 				<div className="pl-5 [grid-area:logo]">
 					<Link className="h4 md:h3" href="/">
-						<Img image={logo.image['dark']} imageWidth={200}></Img>
+						<Img image={logo.image['default']} imageWidth={600} style={{width: "150px"}}></Img>
 					</Link>
 				</div>
 
