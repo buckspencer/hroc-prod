@@ -77,12 +77,12 @@ export default function ContactForm({ }: Partial<{}>) {
         </div>
         <div>
           <form onSubmit={handleSubmit(onSubmit)} className="my-10">
-            <input
+            {/* <input
               type="checkbox"
               id=""
               className="hidden"
               style={{ display: "none" }}
-              {...register("botcheck")} />
+              {...register("botcheck")} /> */}
 
             <div className="mb-5">
               <input
@@ -113,7 +113,6 @@ export default function ContactForm({ }: Partial<{}>) {
                 id="email_address"
                 type="email"
                 placeholder="Email Address"
-                name="email"
                 autoComplete="false"
                 className={`w-full px-4 py-3 border-2 placeholder:text-slate-500 dark:text-slate-900 rounded-md outline-none dark:placeholder:text-slate-700 dark:bg-yellow-600/50 focus:ring-4 ${errors.email
                   ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"
@@ -136,7 +135,7 @@ export default function ContactForm({ }: Partial<{}>) {
 
             <div className="mb-3">
               <textarea
-                name="message"
+                id="message"
                 placeholder="Your Message"
                 className={`w-full px-4 py-3 border-2 placeholder:text-slate-500 dark:text-slate-900 dark:placeholder:text-slate-700 dark:bg-yellow-600/50 rounded-md outline-none h-36 focus:ring-4 ${errors.message
                   ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"

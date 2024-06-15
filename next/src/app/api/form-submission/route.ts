@@ -10,14 +10,16 @@ interface FormData {
 }
 
 // Define your API handler function
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
+    // Ensure that the request method is POST
     if (req.method !== 'POST') {
-      throw new Error('Method Not Allowed');
+      return NextResponse.json({ error: 'Method Not Allowed' }, { status: 405 });
     }
 
-    // Assuming req.body is already parsed correctly (e.g., using middleware)
-    const { name, email, message }: FormData = req.body;
+    // Parse the request body
+    const body = await req.json();
+    const { name, email, message }: FormData = body;
 
     // Create a SMTP transporter
     const transporter = nodemailer.createTransport({
@@ -39,9 +41,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
 
     console.log('Message sent: %s', info.messageId);
-    res.status(200).json({ message: 'Message sent successfully' });
-  } catch (error) {
+    return NextResponse.json({ message: 'Message sent successfully' });
+  } catch (error: any) {
     console.error('Error sending email:', error);
-    res.status(500).json({ error: 'Failed to send message' });
+    return NextResponse.json({ error: 'Failed to send message' }, { status: 500 });
   }
 }
