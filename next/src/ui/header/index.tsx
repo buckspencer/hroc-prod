@@ -19,7 +19,7 @@ export default async function Header() {
 					'mx-auto grid max-w-screen-xl items-center gap-x-6',
 				)}
 			>
-				<div className="pl-5 [grid-area:logo]">
+				<div className="pl-8 [grid-area:logo]">
 					<Link className="h4 md:h3" href="/">
 						<Img image={logo.image['default']} imageWidth={600} style={{width: "150px"}}></Img>
 					</Link>

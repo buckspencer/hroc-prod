@@ -4,6 +4,8 @@ import CTAList from '@/ui/CTAList'
 import Pretitle from '@/ui/Pretitle'
 import { cn } from '@/lib/utils'
 import { stegaClean } from '@sanity/client/stega'
+import Border from "@/lib/sliderbottom.996602f4f0f7711c.png"
+import Image from 'next/image'
 
 export default function Hero({
 	pretitle,
@@ -28,19 +30,21 @@ export default function Hero({
 		<section
 			className={cn(
 				hasImage &&
-					'top-0 grid bg-ink text-canvas *:col-span-full *:row-span-full',
+					'top-0 grid bg-ink text-canvas *:col-span-full *:row-span-full relative',
 			)}
 		>
 			{bgImage && (
-				<picture>
-					<Source image={bgImageMobile} imageWidth={1200} />
-					<Img
-						className="size-full max-h-fold object-cover"
-						image={bgImage}
-						imageWidth={1800}
-						draggable={false}
-					/>
-				</picture>
+				<>
+					<picture>
+						<Source image={bgImageMobile} imageWidth={1200} />
+						<Img
+							className="size-full max-h-fold object-cover"
+							image={bgImage}
+							imageWidth={1800}
+							draggable={false}
+						/>
+					</picture>
+				</>
 			)}
 
 			{content && (
@@ -79,6 +83,12 @@ export default function Hero({
 							})}
 						/>
 					</div>
+				</div>
+			)}
+
+			{bgImage && (
+				<div className="absolute bottom-0 left-0 right-0">
+					<Image src={Border} alt="Bottom Border" layout="responsive" width={150} height={50} />
 				</div>
 			)}
 		</section>
