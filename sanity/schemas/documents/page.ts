@@ -18,6 +18,7 @@ export default defineType({
 				{ type: 'callout' },
 				{ type: 'creative-module' },
 				{ type: 'custom-html' },
+				{ type: 'daily-passage' },
 				{ type: 'flag-list' },
 				{ type: 'hero' },
 				{ type: 'hero.saas' },

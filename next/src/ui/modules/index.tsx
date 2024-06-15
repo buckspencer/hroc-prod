@@ -12,6 +12,7 @@ import RichtextModule from './RichtextModule'
 import StatList from './StatList'
 import StepList from './StepList'
 import TestimonialList from './TestimonialList'
+import DailyPassage from './DailyPassage'
 
 export default function Modules({ modules }: { modules?: Sanity.Module[] }) {
 	return (
@@ -28,6 +29,8 @@ export default function Modules({ modules }: { modules?: Sanity.Module[] }) {
 						return <CreativeModule {...module} key={module._key} />
 					case 'custom-html':
 						return <CustomHTML {...module} key={module._key} />
+					case 'daily-passage':
+						return <DailyPassage {...module} key={module._key} />
 					case 'flag-list':
 						return <FlagList {...module} key={module._key} />
 					case 'hero':

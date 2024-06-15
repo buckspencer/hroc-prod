@@ -21,6 +21,7 @@ import blogRollup from './modules/blog-rollup'
 import callout from './modules/callout'
 import creativeModule from './modules/creative'
 import customHtml from './modules/custom-html'
+import dailyPassage from './modules/daily-passage'
 import flagList from './modules/flag-list'
 import hero from './modules/hero'
 import heroSaas from './modules/hero.saas'
@@ -55,6 +56,7 @@ export const schemaTypes = [
 	callout,
 	creativeModule,
 	customHtml,
+	dailyPassage,
 	flagList,
 	hero,
 	heroSaas,
