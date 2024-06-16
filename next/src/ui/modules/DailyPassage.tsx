@@ -1,5 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import { cn } from '@/lib/utils'
+import css from './DailyPassage.module.css'
 
 interface LiturgicalDay {
   title: string;
@@ -17,6 +19,7 @@ interface LiturgicalDay {
 export default function DailyPassage({ }: Partial<{}>) {
   const [liturgicalDays, setLiturgicalDays] = useState<LiturgicalDay[]>([]);
   const [selectedReading, setSelectedReading] = useState(0); // Default to show the first reading
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     const fetchLiturgicalData = async () => {
@@ -26,11 +29,20 @@ export default function DailyPassage({ }: Partial<{}>) {
         setLiturgicalDays(data);
       } catch (error) {
         console.error('Error fetching liturgical days:', error);
+      } finally {
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
 
     fetchLiturgicalData();
   }, []); // Empty dependency array ensures this effect runs once on component mount
+
+  if (loading) {
+    return <p className="py-6 text-center text-slate-600 text-lg">
+      Requesting readings from Antiochian.org
+      <span className={cn(css.dots)}> ...</span>
+    </p>; // Render loading text
+  }
 
   return (
     <>
