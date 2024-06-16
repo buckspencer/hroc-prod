@@ -4,23 +4,23 @@ import LinkList from './LinkList'
 import React from 'react'
 
 export default async function Menu() {
-  const { headerMenu } = await getSite()
+	const { headerMenu } = await getSite()
 
-  return (
-    <nav className="text-md flex justify-end gap-y-2 [grid-area:ctas] my-4 flex-wrap max-w-5xl mx-auto max-md:header-closed:hidden">
-      {headerMenu?.items?.map((item, key) => {
-        const isLastItem = key === (headerMenu?.items?.length ?? 0) - 1;
-
-        return (
-          <React.Fragment key={key}>
-            {item._type === 'link' && (
-              <CTA className="hover:link text-slate-50 md:px-3" link={item} />
-            )}
-            {item._type === 'link.list' && <LinkList {...item} />}
-            {!isLastItem && <span className="mx-.5 text-slate-50">|</span>}
-          </React.Fragment>
-        );
-      })}
-    </nav>
-  )
+	return (
+		<nav className="max-md:anim-fade-to-r text-sm flex justify-end gap-y-2 [grid-area:ctas] max-md:my-4 max-md:flex-col max-md:header-closed:hidden">
+		{headerMenu?.items?.map((item, key) => {
+			const isLastItem = key === (headerMenu?.items?.length ?? 0) - 1; // Nullish coalescing operator used here
+	
+			return (
+				<React.Fragment key={key}>
+					 {item._type === 'link' && (
+								<CTA className="hover:link md:text-center align-top text-slate-50 md:px-3" link={item} />
+							)}
+							{item._type === 'link.list' && <LinkList {...item} />}
+							{!isLastItem && <span className="hidden lg:inline mx-2 text-slate-50">|</span>}
+				</React.Fragment>
+			);
+		})}
+	</nav>
+	)
 }
