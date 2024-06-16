@@ -18,7 +18,6 @@ export default function AnchoredHeading({
 				className="anim-fade-to-r ml-2 !no-underline md:hidden md:group-hover:inline-block"
 				href={`#${id}`}
 			>
-				🔗
 			</a>
 		</Tag>
 	)
