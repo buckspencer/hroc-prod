@@ -4,7 +4,7 @@ import CTAList from '@/ui/CTAList'
 import Pretitle from '@/ui/Pretitle'
 import { cn } from '@/lib/utils'
 import { stegaClean } from '@sanity/client/stega'
-import Border from "@/lib/sliderbottom.996602f4f0f7711c.png"
+import Border from "@/lib/bottomborder3.png"
 import Image from 'next/image'
 
 export default function Hero({
