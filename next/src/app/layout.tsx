@@ -10,7 +10,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
 	icons: {
-		icon: `https://fav.farm/🖤`,
+		icon: `https://fav.farm/⛪`,
 	},
 }
 

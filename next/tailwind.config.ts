@@ -11,6 +11,7 @@ const config: Config = {
 			},
 			fontFamily: {
 				lora: ['Lora', 'serif'],
+				dancing: ['"Dancing Script"', 'cursive'],
 			},
 			maxHeight: {
 				fold: 'calc(100svh - var(--header-height))',
