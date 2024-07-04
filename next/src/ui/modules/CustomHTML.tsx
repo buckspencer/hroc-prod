@@ -19,5 +19,12 @@ export default function CustomHTML({ html }: { html: string }) {
 		})
 	}, [html])
 
-	return <div dangerouslySetInnerHTML={{ __html: html }} />
+	return (
+		<div className={tw`overflow-x-hidden`}>
+			<div 
+				className={tw`img:max-w-full img:h-auto long-text:whitespace-normal long-text:word-break[break-word]`}
+				dangerouslySetInnerHTML={{ __html: html }} 
+			/>
+		</div>
+	)
 }
