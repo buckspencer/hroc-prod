@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://sanitypress.vercel.app'
+export const BASE_URL = 'https://www.holyresurrectiontucson.org/'
 
 export default function (
 	page: Sanity.PageBase,
