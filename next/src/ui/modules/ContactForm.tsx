@@ -1,8 +1,19 @@
-"use client";
-
-import React, { useEffect } from "react";
-import { useForm, useWatch } from "react-hook-form";
+"use client"
+import React from "react";
+import { useForm, SubmitHandler, useWatch } from "react-hook-form";
 import { VscMap, VscMail, VscCallOutgoing } from "react-icons/vsc";
+
+const WEB3FORMS_API_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_API_KEY;
+
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+  access_key?: string;
+  subject?: string;
+  from_name?: string;
+  botcheck?: boolean;
+}
 
 export default function ContactForm() {
   const {
@@ -12,10 +23,9 @@ export default function ContactForm() {
     reset,
     control,
     formState: { errors, isSubmitSuccessful, isSubmitting },
-  } = useForm({
+  } = useForm<FormData>({
     mode: "onTouched",
   });
-
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [message, setMessage] = React.useState("");
 
@@ -24,39 +34,47 @@ export default function ContactForm() {
     name: "name", 
     defaultValue: "Someone" 
   });
-  
-  useEffect(() => {
-    setValue('subject', `${userName} sent a message from Website`)
+
+  React.useEffect(() => {
+    setValue('subject', `${userName} sent a message from Website`);
   }, [userName, setValue]);
 
-  const onSubmit = async (data, e) => {
-    await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ ...data, access_key: process.env.NEXT_PUBLIC_WEB3FORMS_API_KEY }, null, 2),
-    })
-      .then(async (response) => {
-        let json = await response.json();
-        if (json.success) {
-          setIsSuccess(true);
-          setMessage(json.message);
-          e.target.reset();
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ ...data, access_key: WEB3FORMS_API_KEY }),
+      });
+
+      const json = await response.json();
+      // console.log("API Response:", json);
+
+      if (json.success) {
+        setIsSuccess(true);
+        setMessage(json.message || "Message sent successfully!");
+
+        // Safe call to reset
+        if (reset) {
           reset();
         } else {
-          setIsSuccess(false);
-          setMessage(json.message);
+          console.warn("reset function is not available");
         }
-      })
-      .catch((error) => {
+      } else {
         setIsSuccess(false);
-        setMessage("Client Error. Please check the console.log for more info");
-        console.log(error);
-      });
+        setMessage(json.message || "An error occurred");
+      }
+    } catch (error) {
+      setIsSuccess(false);
+      setMessage("Client Error. Please check the console.log for more info");
+      console.log(error);
+    }
   };
-
+  
+  
   return (
     <div className="section flex w-full flex-col">
       <h1 className="mt-2 mb-3 text-3xl font-semibold tracking-tight text-center lg:leading-snug lg:text-4xl dark:text-slate-900">
@@ -99,11 +117,10 @@ export default function ContactForm() {
                 type="text"
                 placeholder="Full Name"
                 autoComplete="false"
-                className={`w-full px-4 py-3 border-2 placeholder:text-slate-500 dark:text-slate-900 rounded-md outline-none dark:placeholder:text-slate-700 dark:bg-yellow-600/50 focus:ring-4 ${
-                  errors.name
-                    ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"
-                    : "border-slate-600 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
-                }`}
+                className={`w-full px-4 py-3 border-2 placeholder:text-slate-500 dark:text-slate-900 rounded-md outline-none dark:placeholder:text-slate-700 dark:bg-yellow-600/50 focus:ring-4 ${errors.name
+                  ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"
+                  : "border-slate-600 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
+                  }`}
                 {...register("name", {
                   required: "Full name is required",
                   maxLength: 80
@@ -125,11 +142,10 @@ export default function ContactForm() {
                 type="email"
                 placeholder="Email Address"
                 autoComplete="false"
-                className={`w-full px-4 py-3 border-2 placeholder:text-slate-500 dark:text-slate-900 rounded-md outline-none dark:placeholder:text-slate-700 dark:bg-yellow-600/50 focus:ring-4 ${
-                  errors.email
-                    ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"
-                    : "border-slate-600 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
-                }`}
+                className={`w-full px-4 py-3 border-2 placeholder:text-slate-500 dark:text-slate-900 rounded-md outline-none dark:placeholder:text-slate-700 dark:bg-yellow-600/50 focus:ring-4 ${errors.email
+                  ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"
+                  : "border-slate-600 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
+                  }`}
                 {...register("email", {
                   required: "Enter your email",
                   pattern: {
@@ -149,11 +165,10 @@ export default function ContactForm() {
               <textarea
                 id="message"
                 placeholder="Your Message"
-                className={`w-full px-4 py-3 border-2 placeholder:text-slate-500 dark:text-slate-900 dark:placeholder:text-slate-700 dark:bg-yellow-600/50 rounded-md outline-none h-36 focus:ring-4 ${
-                  errors.message
-                    ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"
-                    : "border-slate-600 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
-                }`}
+                className={`w-full px-4 py-3 border-2 placeholder:text-slate-500 dark:text-slate-900 dark:placeholder:text-slate-700 dark:bg-yellow-600/50 rounded-md outline-none h-36 focus:ring-4 ${errors.message
+                  ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"
+                  : "border-slate-600 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
+                  }`}
                 {...register("message", {
                   required: "Enter your Message"
                 })}
@@ -194,7 +209,7 @@ export default function ContactForm() {
 
           {isSubmitSuccessful && (
             <div className="mt-3 text-sm text-center">
-              <span className={isSuccess ? 'text-green-500' : 'text-red-500'}>
+              <span className={message.startsWith('Success') ? 'text-green-500' : 'text-red-500'}>
                 {message}
               </span>
             </div>
