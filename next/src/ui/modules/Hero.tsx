@@ -38,7 +38,7 @@ export default function Hero({
 					<picture>
 						<Source image={bgImageMobile} imageWidth={1200} />
 						<Img
-							className="size-full max-h-fold object-cover"
+							className="size-full max-h-fold object-cover brightness-50"
 							image={bgImage}
 							imageWidth={1800}
 							draggable={false}

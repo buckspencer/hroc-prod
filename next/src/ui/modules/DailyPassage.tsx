@@ -85,6 +85,7 @@ export default function DailyPassage({ }: Partial<{}>) {
   return (
     <>
       <div className="section mx-auto max-w-7xl w-full flex flex-col px-4 sm:px-6 lg:px-8">
+      <p className="my-8 text-2xl leading-8 text-slate-700 text-center">- Today's Liturgical Reading -</p>
         {liturgicalDays.map((day, index) => (
           <div id={`daily-reading-${index}`} key={index}>
             <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center space-y-6 sm:space-y-0 sm:space-x-6">
