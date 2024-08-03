@@ -25,6 +25,7 @@ export default defineType({
 				{ type: 'hero.saas' },
 				{ type: 'hero.split' },
 				{ type: 'logo-list' },
+				{ type: 'photo-gallery' },
 				{ type: 'richtext-module' },
 				{ type: 'stat-list' },
 				{ type: 'step-list' },
