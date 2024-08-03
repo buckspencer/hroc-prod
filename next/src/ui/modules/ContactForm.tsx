@@ -102,7 +102,7 @@ export default function ContactForm() {
             </a>
             <div className="flex items-center mt-2 space-x-2 text-dark-600 dark:text-slate-500">
               <VscMail className="w-4 h-4" />
-              <a href="mailto:admin@holyresurrectiontucson.org">admin@holyresurrectiontucson.org</a>
+              <a href="mailto:hrocoffice@gmail.com">hrocoffice@gmail.com</a>
             </div>
             <div className="flex items-center mt-2 space-x-2 text-dark-600 dark:text-slate-500">
               <VscCallOutgoing className="w-4 h-4" />
