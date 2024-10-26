@@ -1,5 +1,7 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
+import css from './Synaxarion.module.css';
 
 interface Story {
   title: string;
@@ -10,16 +12,48 @@ interface CalendarData {
   stories: Story[];
 }
 
-interface SynaxarionProps {
-  calendarData: CalendarData | null;
-}
-
-const Synaxarion: React.FC<SynaxarionProps> = ({ calendarData }) => {
+export default function Synaxarion() {
+  const [loading, setLoading] = useState(true);
+  const [calendarData, setCalendarData] = useState<CalendarData | null>(null);
   const [currentSaintIndex, setCurrentSaintIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchCalendarData = async () => {
+      try {
+        const response = await fetch(
+          "https://orthocal.info/api/gregorian/",
+          {
+            next: { revalidate: 3600 },
+            cache: "no-store"
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setCalendarData(data);
+      } catch (error) {
+        console.error("Error fetching calendar data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCalendarData();
+  }, []);
 
   const handleSaintClick = (index: number) => {
     setCurrentSaintIndex(index);
   };
+
+  if (loading) {
+    return (
+      <p className="py-6 text-center text-slate-600 text-lg">
+        Requesting readings
+        <span className={cn(css.dots)}> ...</span>
+      </p>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -43,7 +77,7 @@ const Synaxarion: React.FC<SynaxarionProps> = ({ calendarData }) => {
 
       <div className="relative py-8 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 sm:rounded-3xl sm:pt-16 min-h-screen">
         <div className="mb-12 text-base leading-7 text-gray-700 scrollbar w-full">
-          <h1 className="mt-2 mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h1 className="mt-2 mb-7 text-3xl font-bold tracking-tight text-gray-900 sm:text-3xl">
             {calendarData?.stories[currentSaintIndex]?.title}
           </h1>
           <div className="prose max-w-none text-slate-900 w-full font-serif">
@@ -58,5 +92,3 @@ const Synaxarion: React.FC<SynaxarionProps> = ({ calendarData }) => {
     </div>
   );
 };
-
-export default Synaxarion;

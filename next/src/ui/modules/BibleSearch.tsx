@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import { processBibleAPI } from '@/lib/processBibleAPI';
 
 // Define the structure of a Bible version
 interface BibleVersion {
@@ -10,46 +11,44 @@ interface BibleVersion {
 
 // Define the structure of a search result item
 interface SearchResultItem {
-  id: string; // Assuming that each search result item has an ID
-  reference: string; // Reference like "John 3:16"
-  content?: string; // Content of the verse or passage (optional)
-  text?: string; // Alternative text representation (optional)
+  id: string;
+  reference: string;
+  content?: string;
+  text?: string;
 }
 
 // Define the props for the BibleSearch component
 interface BibleSearchProps {
-  onSearchSubmit: (results: SearchResultItem[]) => void; // Function to handle search results
+  onSearchSubmit: (results: SearchResultItem[]) => void;
 }
 
 // Define the component
 export default function BibleSearch({ onSearchSubmit }: BibleSearchProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedVersion, setSelectedVersion] = useState<string>('de4e12af7f28f599-01'); // Default to King James Bible
-  const [versions, setVersions] = useState<BibleVersion[]>([]); // Specify the type here
-  const [searchResults, setSearchResults] = useState<SearchResultItem[]>([]); // Specify type for search results
+  const [selectedVersion, setSelectedVersion] = useState<string>('de4e12af7f28f599-01');
+  const [versions, setVersions] = useState<BibleVersion[]>([]);
+  const [searchResults, setSearchResults] = useState<SearchResultItem[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchVersions = async () => {
       const apiKey = process.env.NEXT_PUBLIC_BIBLE_API;
       if (!apiKey) {
-        console.error('API key is not defined.');
         setError('Unable to load versions. Please check your API key.');
         return;
       }
 
-      const headers = {
-        accept: 'application/json',
-        'api-key': apiKey,
-      };
-
       try {
-        const response = await fetch('https://api.scripture.api.bible/v1/bibles', { headers });
+        const response = await fetch('https://api.scripture.api.bible/v1/bibles', {
+          headers: {
+            accept: 'application/json',
+            'api-key': apiKey as string, // Ensure apiKey is a string
+          },
+        });
         if (!response.ok) throw new Error('Failed to fetch versions.');
         const data = await response.json();
-        setVersions(data.data); // Assuming data.data is the array of versions
+        setVersions(data.data);
       } catch (err) {
-        console.error('Error fetching versions:', err);
         setError('Unable to load versions. Please try again later.');
       }
     };
@@ -58,53 +57,49 @@ export default function BibleSearch({ onSearchSubmit }: BibleSearchProps) {
   }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(titleize(event.target.value)); // Allow spaces by not using trim()
+    setSearchQuery(titleize(event.target.value));
   };
 
   const handleVersionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedVersion(event.target.value);
   };
 
-  const titleize = (str: string) => {
-    return str
-      .toLowerCase()
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-  };
+  const titleize = (str: string) => str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
 
   const handleSearchSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!searchQuery) return;
 
-    const formattedQuery = titleize(searchQuery);
-
-    const url = `https://api.scripture.api.bible/v1/bibles/${selectedVersion}/search?query=${encodeURIComponent(formattedQuery)}&offset=0&limit=10&sort=canonical`;
+    const url = `https://api.scripture.api.bible/v1/bibles/${selectedVersion}/search?query=${encodeURIComponent(
+      searchQuery
+    )}&offset=0&limit=10&sort=canonical`;
     const apiKey = process.env.NEXT_PUBLIC_BIBLE_API;
 
-    if (!apiKey) {
-      console.error('API key is not defined.');
-      setError('Unable to perform search. Please check your API key.');
-      return;
-    }
-
-    const headers = {
-      accept: 'application/json',
-      'api-key': apiKey,
-    };
-
     try {
-      const response = await fetch(url, { headers });
+      const response = await fetch(url, {
+        headers: {
+          accept: 'application/json',
+          'api-key': apiKey as string, // Ensure apiKey is a string
+        },
+      });
       if (!response.ok) throw new Error('Failed to fetch search results.');
       const data = await response.json();
-
       const results: SearchResultItem[] = data.data.passages || data.data.verses || [];
-      setSearchResults(results);
+
+      // Process the content before setting search results
+      const processedResults = await Promise.all(results.map(async result => {
+        const bibleProcessor = new processBibleAPI(result.content || result.text || ''); // Create an instance
+        return {
+          ...result,
+          content: bibleProcessor.process(), // Call the instance method
+        };
+      }));
+
+      setSearchResults(processedResults);
       setError(null);
-      onSearchSubmit(results); // Call the onSearchSubmit prop with results
-    } catch (err) {
+      onSearchSubmit(processedResults);
+    } catch {
       setError('Unable to find results. Please try again.');
-      console.error('Search error:', err);
     }
   };
 
@@ -115,41 +110,36 @@ export default function BibleSearch({ onSearchSubmit }: BibleSearchProps) {
   };
 
   return (
-    <div className="text-center max-w-7xl px-4 sm:px-6 lg:px-8 mt-12 mb-12">
+    <div className="text-center max-w-7xl px-4 sm:px-6 lg:px-8 mb-12">
       <form onSubmit={handleSearchSubmit} className="flex justify-center items-center">
         <input
           type="text"
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search the Bible..."
-          className="border rounded-lg p-2 text-center"
+          className="border rounded-lg p-1 text-center w-40"
         />
 
         <select
           value={selectedVersion}
           onChange={handleVersionChange}
-          className="border rounded-lg p-2 mx-2 w-48"
+          className="border rounded-lg p-1 mx-1 w-28"
         >
           {versions.map((version) => (
             <option key={version.id} value={version.id}>
-              {selectedVersion === version.id 
-                ? `${version.name} (${version.abbreviationLocal})` 
-                : version.name}
+              {version.name}
             </option>
           ))}
         </select>
 
-        <button
-          type="submit"
-          className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-red-700"
-        >
+        <button type="submit" className="px-2 py-1 bg-yellow-600 text-white rounded-lg hover:bg-red-700 text-sm">
           Search
         </button>
 
         <button
           type="button"
           onClick={handleClearResults}
-          className="ml-2 px-4 py-2 bg-gray-300 text-black rounded-lg hover:bg-gray-400"
+          className="ml-1 px-2 py-1 bg-gray-300 text-black rounded-lg hover:bg-gray-400 text-sm"
         >
           Clear
         </button>
@@ -163,13 +153,15 @@ export default function BibleSearch({ onSearchSubmit }: BibleSearchProps) {
             <div key={item.id} className="mb-4">
               <h2 className="font-bold text-lg">{item.reference}</h2>
               <div
-                className="text-gray-700"
-                dangerouslySetInnerHTML={{ __html: item.content || item.text || '' }} // Added fallback
+                className="prose prose-sm text-gray-700 space-y-2" // Tailwind Prose for readability
+                dangerouslySetInnerHTML={{
+                  __html: item.content || item.text || '',
+                }}
               />
             </div>
           ))
         ) : (
-          <p className="text-gray-600">No results found.</p> // Provide a message when no results
+          <p className="text-gray-600">No results found.</p>
         )}
       </div>
     </div>

@@ -1,21 +1,9 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
-import css from './DailyPassage.module.css';
+import React, { useState } from 'react';
 import BibleSearch from './BibleSearch'; 
 import Synaxarion from './Synaxarion';
 import LiturgicalReadings from './LiturgicalReadings';
 
-// Define the structure of a story
-interface Story {
-  title: string;
-  story: string;
-}
-
-// Define the structure of calendar data
-interface CalendarData {
-  stories: Story[];
-}
 
 // Define the structure of a search result
 interface SearchResult {
@@ -26,59 +14,31 @@ interface SearchResult {
 }
 
 export default function DailyPassage() {
-  const [loading, setLoading] = useState(true);
-  const [calendarData, setCalendarData] = useState<CalendarData | null>(null);
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]); // Specify the type for search results
   const [showBibleSearch, setShowBibleSearch] = useState(false);
   const [showSynaxarion, setShowSynaxarion] = useState(false);
   const [showLiturgicalReadings, setShowLiturgicalReadings] = useState(true);
 
-  useEffect(() => {
-    const fetchCalendarData = async () => {
-      try {
-        const response = await fetch(
-          "https://orthocal.info/api/gregorian/",
-          {
-            next: { revalidate: 3600 },
-            cache: "no-store"
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setCalendarData(data);
-      } catch (error) {
-        console.error("Error fetching calendar data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchCalendarData();
-  }, []);
+  const today = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   const toggleBibleSearch = () => {
-    setShowBibleSearch((prev) => !prev); // Toggle the visibility of the BibleSearch component
+    setShowBibleSearch((prev) => !prev);
   };
 
   const toggleLiturgicalReadings = () => {
-    setShowLiturgicalReadings((prev) => !prev); // Toggle the visibility of the LiturgicalReadings component
+    setShowLiturgicalReadings((prev) => !prev);
   };
 
-  // Specify the type for results
   const handleSearchSubmit = (results: SearchResult[]) => {
     setSearchResults(results);
   };
 
-  if (loading) {
-    return (
-      <p className="py-6 text-center text-slate-600 text-lg">
-        Requesting readings
-        <span className={cn(css.dots)}> ...</span>
-      </p>
-    );
-  }
 
   return (
     <>
@@ -99,8 +59,10 @@ export default function DailyPassage() {
 
           <p 
             onClick={toggleLiturgicalReadings} 
-            className="my-8 text-2xl leading-8 text-slate-700 cursor-pointer">
+            className="my-8 text-2xl leading-8 text-slate-700 cursor-pointer"
+          >
             - Today's Liturgical Reading -
+            <sub className="block text-base text-gray-500 mt-1">{today}</sub>
           </p>
           {showLiturgicalReadings && (
             <LiturgicalReadings />
@@ -114,13 +76,14 @@ export default function DailyPassage() {
           </p>
 
           {/* Conditionally render the Synaxarion section */}
-          {showSynaxarion && calendarData && (
+          {showSynaxarion && (
             <div className="my-8 text-center">
-              <Synaxarion calendarData={calendarData} />
+              <Synaxarion />
             </div>
           )}
         </div>
       </div>
+      
       <div className="text-xs text-center font-serif text-red-900/40">
         Daily Reading by
         <a href={"https://www.antiochian.org/liturgicday"} target="_blank" rel="noreferrer" className="hover:underline">
