@@ -110,7 +110,7 @@ export default function BibleSearch({ onSearchSubmit }: BibleSearchProps) {
   };
 
   return (
-    <div className="text-center max-w-7xl px-4 sm:px-6 lg:px-8 mb-12">
+    <div className="text-center max-w-7xl mb-12">
       <form onSubmit={handleSearchSubmit} className="flex justify-center items-center">
         <input
           type="text"
