@@ -8,3 +8,4 @@
 .pnp.*
 .yarnrc
 .yarnrc.yml
+.env*.local
