@@ -52,6 +52,40 @@ export default defineType({
 						withFilename: true,
 					},
 				}),
+				defineArrayMember({
+					type: 'object',
+					name: 'iframe',
+					title: 'Iframe',
+					fields: [
+						defineField({
+							name: 'url',
+							type: 'url',
+							title: 'URL',
+							validation: (Rule) => Rule.required(),
+						}),
+						defineField({
+							name: 'height',
+							type: 'number',
+							title: 'Height (px)',
+							initialValue: 500,
+						}),
+						defineField({
+							name: 'title',
+							type: 'string',
+							title: 'Title (for accessibility)',
+						}),
+					],
+					preview: {
+						select: {
+							title: 'title',
+							subtitle: 'url',
+						},
+						prepare: ({ title, subtitle }) => ({
+							title: title || 'Iframe',
+							subtitle,
+						}),
+					},
+				}),
 			],
 		}),
 		defineField({
@@ -68,6 +102,13 @@ export default defineType({
 			name: 'publishDate',
 			type: 'date',
 			validation: (Rule) => Rule.required(),
+		}),
+		defineField({
+			name: 'showReadTime',
+			type: 'boolean',
+			title: 'Show read time',
+			description: 'Display the estimated read time for this post',
+			initialValue: true,
 		}),
 		defineField({
 			name: 'metadata',

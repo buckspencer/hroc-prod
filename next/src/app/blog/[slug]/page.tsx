@@ -34,6 +34,7 @@ async function getPost(params: Props['params']) {
 				'text': pt::text(@)
 			},
 			categories[]->,
+			showReadTime,
 			metadata {
 				...,
 				'ogimage': image.asset->url

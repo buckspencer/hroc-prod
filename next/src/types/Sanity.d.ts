@@ -46,6 +46,7 @@ declare global {
 			headings?: { style: string; text: string }[]
 			categories: BlogCategory[]
 			publishDate: string
+			showReadTime: boolean
 		}
 
 		type BlogCategory = SanityDocument<{

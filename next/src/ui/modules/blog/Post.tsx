@@ -14,18 +14,18 @@ export default function Post({ post }: { post: Sanity.BlogPost }) {
 				<div className="flex flex-wrap items-center justify-center gap-x-4">
 					<Date value={post.publishDate} />
 					<Categories categories={post.categories} />
-					<ReadTime value={post.readTime} />
+					{post.showReadTime && <ReadTime value={post.readTime} />}
 				</div>
 			</header>
 
-			<div className="section grid gap-8 lg:grid-cols-[1fr,auto]">
-				<aside className="lg:sticky-below-header mx-auto w-full max-w-lg self-start [--offset:1rem] lg:order-1 lg:w-[250px]">
+			<div className="section">
+				{/* <aside className="lg:sticky-below-header mx-auto w-full max-w-lg self-start [--offset:1rem] lg:order-1 lg:w-[250px]">
 					<TableOfContents headings={post.headings} />
-				</aside>
+				</aside> */}
 
 				<Content
 					value={post.body}
-					className={cn(css.body, 'grid max-w-screen-md')}
+					className={cn(css.body, 'mx-auto max-w-4xl')}
 				/>
 			</div>
 		</article>
